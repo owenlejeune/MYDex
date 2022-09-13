@@ -1,0 +1,26 @@
+buildscript {
+    def gradle = "7.1.2"
+    def kotlin = "1.6.21"
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+
+        dependencies {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin"
+            classpath "com.android.tools.build:gradle:$gradle"
+        }
+    }
+}
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
