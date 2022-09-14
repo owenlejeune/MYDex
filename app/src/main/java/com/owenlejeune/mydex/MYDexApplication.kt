@@ -3,6 +3,8 @@ package com.owenlejeune.mydex
 import android.app.Application
 import com.facebook.stetho.Stetho
 import com.kieronquinn.monetcompat.core.MonetCompat
+import com.owenlejeune.mydex.di.Modules
+import com.owenlejeune.mydex.di.networkModule
 import com.owenlejeune.mydex.di.preferencesModule
 import com.owenlejeune.mydex.preferences.AppPreferences
 import org.koin.android.ext.android.inject
@@ -24,9 +26,7 @@ class MYDexApplication: Application() {
                 if (BuildConfig.DEBUG) Level.ERROR else Level.NONE
             )
             androidContext(this@MYDexApplication)
-            modules(
-                preferencesModule
-            )
+            modules(Modules)
         }
 
         MonetCompat.enablePaletteCompat()
