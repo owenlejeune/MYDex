@@ -5,7 +5,10 @@ import com.google.gson.TypeAdapterFactory
 import com.owenlejeune.mydex.BuildConfig
 import com.owenlejeune.mydex.api.*
 import com.owenlejeune.mydex.api.pokeapi.PokeApiClient
+import com.owenlejeune.mydex.api.pokeapi.v2.PokemonApi
+import com.owenlejeune.mydex.api.pokeapi.v2.PokemonService
 import com.owenlejeune.mydex.preferences.AppPreferences
+import com.owenlejeune.mydex.utils.ResourceUtils
 import org.koin.dsl.module
 
 val networkModule = module {
@@ -20,14 +23,20 @@ val networkModule = module {
     single {
         GsonBuilder().apply {
             get<List<TypeAdapterFactory>>().forEach { taf -> registerTypeAdapterFactory(taf) }
-        }
+        }.create()
     }
 
     single { PokeApiClient() }
+    single { get<PokeApiClient>().createPokemonService() }
+    single { PokemonService() }
 }
 
 val preferencesModule = module {
     single { AppPreferences(get()) }
 }
 
-val Modules = listOf(networkModule, preferencesModule)
+val appModule = module {
+    factory { ResourceUtils(get()) }
+}
+
+val Modules = listOf(networkModule, preferencesModule, appModule)

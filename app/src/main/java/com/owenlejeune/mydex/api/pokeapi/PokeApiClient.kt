@@ -1,6 +1,7 @@
 package com.owenlejeune.mydex.api.pokeapi
 
 import com.owenlejeune.mydex.api.Client
+import com.owenlejeune.mydex.api.pokeapi.v2.PokemonApi
 import com.owenlejeune.mydex.preferences.AppPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -15,6 +16,8 @@ class PokeApiClient: KoinComponent {
     private val client: Client by inject { parametersOf(BASE_URL) }
     private val preferences: AppPreferences by inject()
 
-
+    fun createPokemonService(): PokemonApi {
+        return client.create(PokemonApi::class.java)
+    }
 
 }

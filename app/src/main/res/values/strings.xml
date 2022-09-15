@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MYDex</string>
+
+    <!-- main screen -->
+    <string name="main_screen_title">What Pokémon\nare you looking for?</string>
+    <string name="main_search_placeholder">Search Pokémon, Move, Ability, etc.</string>
+
+    <!-- nav titles -->
+    <string name="pokedex_nav_title">Pokedex</string>
+    <string name="moves_nav_title">Moves</string>
+    <string name="abilities_nav_title">Abilities</string>
+    <string name="items_nav_title">Items</string>
+    <string name="locations_nav_title">Locations</string>
+    <string name="type_charts_nav_title">Type charts</string>
 </resources>

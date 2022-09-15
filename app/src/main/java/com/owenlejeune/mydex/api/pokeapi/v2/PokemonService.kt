@@ -1,5 +1,6 @@
 package com.owenlejeune.mydex.api.pokeapi.v2
 
+import android.util.Log
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import org.koin.core.component.KoinComponent
@@ -10,6 +11,8 @@ class PokemonService: KoinComponent {
 
     companion object {
         private const val DEFAULT_LIMIT = 20
+
+        val TAG = PokemonService::class.java.simpleName
     }
 
     private val service: PokemonApi by inject()
@@ -22,7 +25,11 @@ class PokemonService: KoinComponent {
         val limit = DEFAULT_LIMIT
         val offset = DEFAULT_LIMIT * page
 
-        return service.getPaginatedPokemon(offset = offset, limit = limit)
+        Log.d(TAG, "Paginated: page=$page, limit=$limit, offset=$offset")
+
+        return service.getPaginatedPokemon(offset = offset, limit = limit).apply {
+            Log.d(TAG, "Response: $isSuccessful, ${body()?.results?.map { it.name }}")
+        }
     }
 
 }
