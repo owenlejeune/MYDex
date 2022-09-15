@@ -59,6 +59,7 @@ dependencies {
     // android x
     def androidx = "1.0.0"
     implementation "androidx.window:window:$androidx"
+    implementation "androidx.palette:palette:$androidx"
 
     // material
     def material = "1.6.1"
