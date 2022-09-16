@@ -61,7 +61,7 @@ class MainActivity : MonetCompatActivity() {
             ) {
                 val id = it.arguments?.getInt("id")
                 id?.let {
-                    PokemonDetailView(pokemonId = it)
+                    PokemonDetailView(pokemonId = id, appNavController = appNavController)
                 }
             }
         }

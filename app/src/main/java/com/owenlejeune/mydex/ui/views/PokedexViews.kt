@@ -32,6 +32,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
 import com.owenlejeune.mydex.api.pokeapi.v2.viewmodel.PokemonViewModel
 import com.owenlejeune.mydex.extensions.getIdFromUrl
+import com.owenlejeune.mydex.extensions.getNameForLanguage
 import com.owenlejeune.mydex.extensions.header
 import com.owenlejeune.mydex.extensions.lazyPagingItems
 import com.owenlejeune.mydex.ui.components.PokemonTypeLabel
@@ -67,7 +68,7 @@ fun PokedexView(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
-                .padding(start = 36.dp, end = 36.dp)
+                .padding(horizontal = 36.dp)
                 .fillMaxSize()
         ) {
             header {
@@ -95,8 +96,7 @@ fun PokedexView(
 
         SmallTopAppBar(
             modifier = Modifier
-                .statusBarsPadding()
-                .blur(radius = 10.dp),
+                .statusBarsPadding(),
             navigationIcon = {
                 IconButton(onClick = { appNavController.popBackStack() }) {
                     Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = null)
@@ -134,7 +134,7 @@ fun PokedexCard(
     val bgColor = remember { mutableStateOf(defBg) }
     Card(
         modifier = Modifier
-            .height(160.dp)
+            .height(130.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = bgColor.value),
@@ -153,7 +153,7 @@ fun PokedexCard(
                 contentDescription = null,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .offset(x = 20.dp, y = 0.dp)
+                    .offset(x = 20.dp, y = 20.dp)
                     .size(width = 96.dp, height = 96.dp),
                 colorFilter = ColorFilter.tint(Color.White.copy(alpha = 0.15f))
             )
@@ -166,8 +166,7 @@ fun PokedexCard(
                 species.value?.let { species ->
                     bgColor.value = ColorUtils.pokeColorToComposeColor(color = species.color.name)
 
-                    val locale = Locale.current.language
-                    val name = species.names.find { it.language.name == locale }?.name ?: species.name
+                    val name = species.names.getNameForLanguage() ?: species.name
                     val dexNumber = pokemon.value!!.id.toString().padStart(3, '0')
 
                     Text(
@@ -191,7 +190,7 @@ fun PokedexCard(
                             }
 
                             pokemonType.value?.let { t ->
-                                val typeName = t.names.find { it.language.name == locale }?.name ?: ""//type.type.name
+                                val typeName = t.names.getNameForLanguage() ?: ""//type.type.name
                                 PokemonTypeLabel(type = typeName)
                             }
                         }

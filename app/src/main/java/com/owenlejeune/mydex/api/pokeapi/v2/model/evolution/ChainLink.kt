@@ -7,5 +7,5 @@ class ChainLink(
     @SerializedName("is_baby") val isBaby: Boolean,
     @SerializedName("species") val species: NameAndUrl,
     @SerializedName("evolution_details") val evolutionDetails: EvolutionDetails,
-    @SerializedName("evolves_to") val evolves_to: List<ChainLink>?
+    @SerializedName("evolves_to") val evolves_to: List<ChainLink?>?
 )
