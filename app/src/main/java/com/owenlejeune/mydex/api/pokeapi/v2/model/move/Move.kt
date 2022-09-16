@@ -1,6 +1,7 @@
 package com.owenlejeune.mydex.api.pokeapi.v2.model.move
 
 import com.google.gson.annotations.SerializedName
+import com.owenlejeune.mydex.api.Flatten
 import com.owenlejeune.mydex.api.pokeapi.v2.model.machine.MachineDetails
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.NameAndUrl
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.ability.EffectChange
@@ -16,7 +17,7 @@ class Move (
     @SerializedName("pp") val pp: Int,
     @SerializedName("priority") val priority: Int,
     @SerializedName("contest_combos") val contestCombos: ContestCombos,
-    @SerializedName("contest_effect.url") val contestEffectUrl: String,
+    @Flatten("contest_effect.url") val contestEffectUrl: String,
     @SerializedName("contest_type") val contestType: NameAndUrl,
     @SerializedName("damage_class") val damageClass: NameAndUrl,
     @SerializedName("effect_chance") val effectChance: Int,
@@ -27,7 +28,7 @@ class Move (
     @SerializedName("learned_by_pokemon") val learnedByPokemon: List<NameAndUrl>,
     @SerializedName("machines") val machines: List<MachineDetails>,
     @SerializedName("meta") val meta: MoveMeta,
-    @SerializedName("super_contest_effect.url") val superContestEffectUrl: String,
+    @Flatten("super_contest_effect.url") val superContestEffectUrl: String,
     @SerializedName("target") val target: NameAndUrl,
     @SerializedName("type") val type: NameAndUrl
 )

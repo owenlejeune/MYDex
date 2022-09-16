@@ -1,17 +1,18 @@
 package com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon
 
 import com.google.gson.annotations.SerializedName
+import com.owenlejeune.mydex.api.Flatten
 import com.owenlejeune.mydex.api.pokeapi.v2.model.game.PokedexNumber
 import com.owenlejeune.mydex.api.pokeapi.v2.model.location.PalParkEncounter
-import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.ability.FlavorTextEntry
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.*
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.ability.FlavorTextEntry
 
 class PokemonSpecies(
     @SerializedName("base_happiness") val baseHappiness: Int,
     @SerializedName("capture_rate") val captureRate: Int,
     @SerializedName("color") val color: NameAndUrl,
     @SerializedName("egg_groups") val eggGroups: List<NameAndUrl>,
-    @SerializedName("evolution_change.url") val evolutionChangeUrl: String,
+    @Flatten("evolution_chain.url") val evolutionChainUrl: String,
     @SerializedName("flavor_text_entries") val flavorTextEntries: List<FlavorTextEntry>,
     @SerializedName("form_descriptions") val formDescriptions: List<Description>,
     @SerializedName("forms_switchable") val formsSwitchable: Boolean,
