@@ -2,6 +2,8 @@ package com.owenlejeune.mydex.api.pokeapi.v2
 
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +16,11 @@ interface PokemonApi {
 
     @GET("pokemon/")
     suspend fun getPaginatedPokemon(@Query("offset") offset: Int, @Query("limit") limit: Int): Response<PaginatedResponse>
+
+    @GET("pokemon-species/{id}")
+    suspend fun getPokemonSpecies(@Path("id") id: Int): Response<PokemonSpecies>
+
+    @GET("type/{id}")
+    suspend fun getPokemonType(@Path("id") id: Int): Response<PokemonType>
 
 }

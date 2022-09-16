@@ -22,7 +22,7 @@ sealed class DataNavItem(
 
     val title = resourceUtils.getString(titleRes)
 
-    object Pokedex: DataNavItem("pokedex_route", PokeTeal, R.string.pokedex_nav_title)
+    object Pokedex: DataNavItem("pokedex_route", PokeGreen, R.string.pokedex_nav_title)
     object Moves: DataNavItem("moves_route", PokeRed, R.string.moves_nav_title)
     object Abilities: DataNavItem("abilities_route", PokeLightBlue, R.string.abilities_nav_title)
     object Items: DataNavItem("items_route", PokeYellow, R.string.items_nav_title)

@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -190,5 +191,25 @@ fun MenuItemButton(
                 style = MaterialTheme.typography.bodyLarge.copy(color = Color.White)
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PokemonTypeLabel(
+    type: String
+) {
+    Card(
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(containerColor = Color(0x38FFFFFF))
+    ) {
+        Text(
+            text = type,
+            modifier = Modifier
+                .padding(vertical = 3.dp, horizontal = 8.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 12.sp,
+            color = Color.White
+        )
     }
 }

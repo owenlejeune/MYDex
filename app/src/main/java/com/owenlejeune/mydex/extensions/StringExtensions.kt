@@ -1,5 +1,5 @@
 package com.owenlejeune.mydex.extensions
 
-fun String.charAtFromEnd(index: Int): Char {
-    return get(length-1-index)
+fun String.getIdFromUrl(): Int {
+    return split("/").find { it.toIntOrNull() != null }?.toInt() ?: -1
 }

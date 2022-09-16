@@ -12,7 +12,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.paging.PokemonPagingSource
 import kotlinx.coroutines.flow.Flow
 
 class PokemonViewModel: ViewModel() {
-    val pokemon: Flow<PagingData<Pokemon>> = Pager(PagingConfig(pageSize = Int.MAX_VALUE)) {
+    val pokemon: Flow<PagingData<NameAndUrl>> = Pager(PagingConfig(pageSize = Int.MAX_VALUE)) {
         PokemonPagingSource()
     }.flow.cachedIn(viewModelScope)
 }

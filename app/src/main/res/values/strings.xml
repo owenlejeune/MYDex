@@ -6,7 +6,7 @@
     <string name="main_search_placeholder">Search Pokémon, Move, Ability, etc.</string>
 
     <!-- nav titles -->
-    <string name="pokedex_nav_title">Pokedex</string>
+    <string name="pokedex_nav_title">Pokédex</string>
     <string name="moves_nav_title">Moves</string>
     <string name="abilities_nav_title">Abilities</string>
     <string name="items_nav_title">Items</string>
