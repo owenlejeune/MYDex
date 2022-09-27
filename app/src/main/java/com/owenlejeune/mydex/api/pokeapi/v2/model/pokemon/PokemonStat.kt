@@ -14,5 +14,5 @@ class PokemonStat(
     @SerializedName("is_battle_only") val isBattleOnly: Boolean,
     @SerializedName("move_damage_class") val moveDamageClass: NameAndUrl,
     @SerializedName("name") val name: String,
-    @SerializedName("names") val names: NameAndLanguage
+    @SerializedName("names") val names: List<NameAndLanguage>
 )

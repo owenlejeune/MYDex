@@ -24,6 +24,7 @@ import com.owenlejeune.mydex.ui.components.MenuItemButton
 import com.owenlejeune.mydex.ui.components.SearchBar
 import com.owenlejeune.mydex.ui.navigation.DataNavItem
 import org.koin.java.KoinJavaComponent
+import kotlin.math.ceil
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -105,14 +106,14 @@ private fun BoxScope.SingleColumnMainContent(appNavController: NavHostController
         Spacer(modifier = Modifier.height(32.dp))
 
         val cols = 2
-        val rows = DataNavItem.Pages.size/cols
+        val rows = ceil(DataNavItem.Pages.size.toFloat()/cols.toFloat()).toInt()
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             for (i in 0 until rows) {
                 val first = DataNavItem.Pages[2*i]
-                val second = if (2*i+1 <= DataNavItem.Pages.size) {
+                val second = if (2*i+1 < DataNavItem.Pages.size) {
                     DataNavItem.Pages[2*i+1]
                 } else {
                     null

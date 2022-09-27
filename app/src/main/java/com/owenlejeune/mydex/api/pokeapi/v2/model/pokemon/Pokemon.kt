@@ -21,6 +21,6 @@ class Pokemon(
     @SerializedName("moves") val moves: List<PokemonMove>,
     @SerializedName("species") val species: NameAndUrl,
     @SerializedName("sprites") val sprites: Sprites,
-    @SerializedName("stats") val state: List<Stat>,
+    @SerializedName("stats") val stats: List<Stat>,
     @SerializedName("types") val types: List<Type>
 )

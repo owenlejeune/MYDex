@@ -9,7 +9,7 @@ object ColorUtils {
 
     @Composable
     fun pokeColorToComposeColor(color: String): Color {
-        return when (color) {
+        return when (color.lowercase()) {
             "green" -> PokeGreen
             "red" -> PokeRed
             "blue" -> PokeBlue
@@ -21,6 +21,31 @@ object ColorUtils {
             "white" -> PokeWhite
             "yellow" -> PokeYellow
             else -> MaterialTheme.colorScheme.secondaryContainer
+        }
+    }
+
+    fun pokeTypeNameToComposeColor(type: String): Color {
+        return when (type.lowercase()) {
+            "bug" -> BugType
+            "dark" -> DarkType
+            "dragon" -> DragonType
+            "electric" -> ElectricType
+            "fairy" -> FairyType
+            "fighting" -> FightingType
+            "fire" -> FireType
+            "flying" -> FlyingType
+            "ghost" -> GhostType
+            "grass" -> GrassType
+            "ground" -> GroundType
+            "ice" -> IceType
+            "normal" -> NormalType
+            "poison" -> PoisonType
+            "psychic" -> PsychicType
+            "rock" -> RockType
+            "shadow" -> ShadowType
+            "steel" -> SteelType
+            "water" -> WaterType
+            else -> UnknownType
         }
     }
 

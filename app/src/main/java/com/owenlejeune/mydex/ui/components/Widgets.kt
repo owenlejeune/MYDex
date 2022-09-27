@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -213,3 +214,29 @@ fun PokemonTypeLabel(
         )
     }
 }
+
+@Composable
+fun SmallTabIndicator(
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colorScheme.primary
+) {
+    Spacer(
+        modifier
+            .padding(horizontal = 28.dp)
+            .height(2.dp)
+            .background(color, RoundedCornerShape(topStartPercent = 100, topEndPercent = 100))
+    )
+}
+
+//@Composable
+//fun FlowLayout(
+//    modifier: Modifier = Modifier,
+//    content: @Composable () -> Unit
+//) {
+//    val measurePolicy = flowLayoutMeasurePolicy()
+//    Layout(
+//        measurePolicy =  measurePolicy,
+//        content = content,
+//        modifier = modifier
+//    )
+//}

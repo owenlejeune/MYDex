@@ -12,4 +12,14 @@
     <string name="items_nav_title">Items</string>
     <string name="locations_nav_title">Locations</string>
     <string name="type_charts_nav_title">Type charts</string>
+    <string name="about_tab_title">About</string>
+    <string name="base_stats_tab_title">Base Stats</string>
+    <string name="evolution_tab_title">Evolution</string>
+    <string name="moves_tab_title">Moves</string>
+    <string name="settings_nav_title">Settings</string>
+    <string name="type_weaknesses_title">Type weaknesses</string>
+    <string name="type_weaknesses_description">Pokémon of these types deal double damage to this Pokémon</string>
+    <string name="type_defences_title">Type defences</string>
+    <string name="type_defences_half_description">Pokémon of these types deal half damage to this Pokémon</string>
+    <string name="type_defences_no_description">Pokémon of these types deal no damage to this Pokémon</string>
 </resources>

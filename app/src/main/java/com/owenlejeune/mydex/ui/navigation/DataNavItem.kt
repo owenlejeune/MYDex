@@ -15,7 +15,7 @@ sealed class DataNavItem(
 ): KoinComponent {
 
     companion object {
-        val Pages by lazy { listOf(Pokedex, Moves, Abilities, Items, Locations, TypeCharts) }
+        val Pages by lazy { listOf(Pokedex, Moves, Abilities, Items, Locations, TypeCharts, Settings) }
     }
 
     private val resourceUtils: ResourceUtils by inject()
@@ -28,5 +28,6 @@ sealed class DataNavItem(
     object Items: DataNavItem("items_route", PokeYellow, R.string.items_nav_title)
     object Locations: DataNavItem("locations_route", PokePurple, R.string.locations_nav_title)
     object TypeCharts: DataNavItem("type_charts_route", PokeBrown, R.string.type_charts_nav_title)
+    object Settings: DataNavItem("settings_route", PokeGrey, R.string.settings_nav_title)
 
 }

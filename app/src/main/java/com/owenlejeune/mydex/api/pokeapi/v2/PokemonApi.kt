@@ -3,6 +3,7 @@ package com.owenlejeune.mydex.api.pokeapi.v2
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
 import retrofit2.Response
 import retrofit2.http.GET
@@ -22,5 +23,8 @@ interface PokemonApi {
 
     @GET("type/{id}")
     suspend fun getPokemonType(@Path("id") id: Int): Response<PokemonType>
+
+    @GET("stat/{id}")
+    suspend fun getPokemonStat(@Path("id") id: Int): Response<PokemonStat>
 
 }

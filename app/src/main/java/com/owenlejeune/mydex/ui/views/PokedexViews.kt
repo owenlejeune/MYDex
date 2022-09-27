@@ -39,6 +39,7 @@ import com.owenlejeune.mydex.ui.components.PokemonTypeLabel
 import com.owenlejeune.mydex.ui.navigation.MainNavItem
 import com.owenlejeune.mydex.utils.AppCache
 import com.owenlejeune.mydex.utils.ColorUtils
+import com.owenlejeune.mydex.utils.PokeUtils
 import org.koin.java.KoinJavaComponent.get
 
 @Composable
@@ -167,8 +168,6 @@ fun PokedexCard(
                     bgColor.value = ColorUtils.pokeColorToComposeColor(color = species.color.name)
 
                     val name = species.names.getNameForLanguage() ?: species.name
-                    val dexNumber = pokemon.value!!.id.toString().padStart(3, '0')
-
                     Text(
                         modifier = Modifier
                             .align(Alignment.TopStart),
@@ -199,13 +198,13 @@ fun PokedexCard(
                     Text(
                         modifier = Modifier
                             .align(Alignment.TopEnd),
-                        text = "#${dexNumber}",
+                        text = PokeUtils.idToDexNumber(pokemonId),
                         style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                         color = Color.Unspecified.copy(alpha = 0.3f)
                     )
 
                     AsyncImage(
-                        model = pokemon.value?.sprites?.frontDefault,
+                        model = PokeUtils.spriteFromId(pokemonId),
                         contentDescription = name,
                         modifier = Modifier
                             .align(Alignment.BottomEnd)

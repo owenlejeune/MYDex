@@ -4,6 +4,7 @@ import android.util.Log
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -40,6 +41,10 @@ class PokemonService: KoinComponent {
 
     suspend fun getPokemonType(id: Int): Response<PokemonType> {
         return service.getPokemonType(id)
+    }
+
+    suspend fun getPokemonStat(id: Int): Response<PokemonStat> {
+        return service.getPokemonStat(id)
     }
 
 }
