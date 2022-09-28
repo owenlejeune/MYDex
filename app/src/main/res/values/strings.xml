@@ -22,4 +22,9 @@
     <string name="type_defences_title">Type defences</string>
     <string name="type_defences_half_description">Pokémon of these types deal half damage to this Pokémon</string>
     <string name="type_defences_no_description">Pokémon of these types deal no damage to this Pokémon</string>
+    <string name="poke_details_height_title">Height</string>
+    <string name="poke_details_weight_title">Height</string>
+    <string name="poke_details_breeding_title">Breeding</string>
+    <string name="poke_details_gender_subtitle">Gender</string>
+    <string name="poke_details_egg_groups_subtitle">Egg Groups</string>
 </resources>

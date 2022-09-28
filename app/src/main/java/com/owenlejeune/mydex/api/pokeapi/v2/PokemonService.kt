@@ -6,6 +6,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import retrofit2.Response
@@ -45,6 +46,10 @@ class PokemonService: KoinComponent {
 
     suspend fun getPokemonStat(id: Int): Response<PokemonStat> {
         return service.getPokemonStat(id)
+    }
+
+    suspend fun getEggGroup(id: Int): Response<EggGroup> {
+        return service.getEggGroup(id)
     }
 
 }

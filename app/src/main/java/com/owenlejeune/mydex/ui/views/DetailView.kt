@@ -16,10 +16,12 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -34,11 +36,16 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 import com.owenlejeune.mydex.extensions.adjustBy
 import com.owenlejeune.mydex.extensions.getIdFromUrl
 import com.owenlejeune.mydex.extensions.getNameForLanguage
+import com.owenlejeune.mydex.preferences.AppPreferences
 import com.owenlejeune.mydex.ui.components.PokemonTypeLabel
 import com.owenlejeune.mydex.ui.components.SmallTabIndicator
+import com.owenlejeune.mydex.ui.theme.PokeBlue
+import com.owenlejeune.mydex.ui.theme.PokeGrey
+import com.owenlejeune.mydex.ui.theme.PokeLightRed
 import com.owenlejeune.mydex.utils.*
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -225,20 +232,132 @@ private fun ColumnScope.Details(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AboutView(
     pokemon: Pokemon,
     pokemonSpecies: PokemonSpecies,
-    service: PokemonService
+    service: PokemonService,
+    preferences: AppPreferences = get(AppPreferences::class.java)
 ) {
     val scrollState = rememberScrollState()
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+    Column (
+        verticalArrangement = Arrangement.spacedBy(16.dp),
         modifier = Modifier
+            .fillMaxHeight()
+            .fillMaxWidth()
             .padding(all = 24.dp)
             .verticalScroll(state = scrollState)
     ) {
+        val lang = Locale.current.language
+        val flavorText = pokemonSpecies.flavorTextEntries.filter { it.language.name == lang }[0]
 
+        Text(
+            text = flavorText.flavorText.replace("\n", " "),
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Card(
+            elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        ) {
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, top = 12.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.poke_details_height_title),
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = stringResource(R.string.poke_details_weight_title),
+                    modifier = Modifier.weight(1f),
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+            ) {
+                val height = if (preferences.useMetric) {
+                    PokeUtils.heightToCm(pokemon.height)
+                } else {
+                    PokeUtils.heightToFtIn(pokemon.height)
+                }
+                Text(
+                    text = height,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+                val weight = if (preferences.useMetric) {
+                    PokeUtils.weightInKg(pokemon.weight)
+                } else {
+                    PokeUtils.weightInPounds(pokemon.weight)
+                }
+                Text(
+                    text = weight,
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+
+        Text(
+            text = stringResource(R.string.poke_details_breeding_title),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(text = stringResource(R.string.poke_details_gender_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(text = stringResource(R.string.poke_details_egg_groups_subtitle), color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                val percentageFemale = PokeUtils.genderRateToPercentage(pokemonSpecies.genderRate)
+                val percentageMale = 100f - percentageFemale
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(painter = painterResource(id = R.drawable.male_symbol), contentDescription = null, tint = PokeBlue)
+                        Text(text = "$percentageMale%")
+                    }
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(painter = painterResource(id = R.drawable.female_symbol), contentDescription = null, tint = PokeLightRed)
+                        Text(text = "$percentageFemale%")
+                    }
+                }
+
+                val eggGroups = remember { mutableListOf<EggGroup>() }
+                if (eggGroups.isEmpty()) {
+                    pokemonSpecies.eggGroups.forEach {
+                        val id = it.url.getIdFromUrl()
+                        DataManager.getEggGroupById(id) { eggGroup -> eggGroups.add(eggGroup) }
+                    }
+                }
+                if (eggGroups.isNotEmpty()) {
+                    Text(text = eggGroups.joinToString(separator = ", ") { it.names.getNameForLanguage() ?: it.name } )
+                }
+            }
+        }
     }
 }
 
@@ -397,6 +516,44 @@ private fun BaseStatsView(
     }
 }
 
+@Composable
+private fun EvolutionView(
+    pokemon: Pokemon,
+    pokemonSpecies: PokemonSpecies,
+    service: PokemonService
+) {
+    val scrollState = rememberScrollState()
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .padding(all = 24.dp)
+            .verticalScroll(state = scrollState)
+            .background(color = Color.Red)
+            .fillMaxSize()
+    ) {
+        Text(text = "Evolution")
+    }
+}
+
+@Composable
+private fun MovesView(
+    pokemon: Pokemon,
+    pokemonSpecies: PokemonSpecies,
+    service: PokemonService
+) {
+    val scrollState = rememberScrollState()
+    Column(
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier
+            .padding(all = 24.dp)
+            .verticalScroll(state = scrollState)
+            .background(color = Color.Red)
+            .fillMaxSize()
+    ) {
+        Text(text = "Moves")
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun TypeRelationChip (
@@ -469,9 +626,7 @@ private sealed class DetailTab(
     object About: DetailTab(
         stringRes = R.string.about_tab_title,
         route = "about_tab",
-        screen = @Composable { pokemon, pokemonSpecies, service ->
-
-        }
+        screen = @Composable { p, ps, s -> AboutView(p, ps, s) }
     )
 
     object BaseStats: DetailTab(
@@ -483,17 +638,13 @@ private sealed class DetailTab(
     object Evolution: DetailTab(
         stringRes = R.string.evolution_tab_title,
         route = "evolution_tab",
-        screen = @Composable { pokemon, pokemonSpecies, service ->
-
-        }
+        screen = @Composable { p, ps, s -> EvolutionView(p, ps, s) }
     )
 
     object Moves: DetailTab(
         stringRes = R.string.moves_tab_title,
         route = "moves_tab",
-        screen = @Composable { pokemon, pokemonSpecies, service ->
-
-        }
+        screen = @Composable { p, ps, s -> MovesView(p, ps, s) }
     )
 
 }

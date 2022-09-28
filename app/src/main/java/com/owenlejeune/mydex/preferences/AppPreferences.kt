@@ -20,6 +20,7 @@ class AppPreferences(context: Context) {
         private val SELECTED_COLOR = "selected_color"
         private val USE_WALLPAPER_COLORS = "use_wallpaper_colors"
         private val DARK_THEME = "dark_theme"
+        private val USE_METRIC = "use_metric"
     }
 
     private val preferences: SharedPreferences = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE)
@@ -49,6 +50,12 @@ class AppPreferences(context: Context) {
     var selectedColor: Int
         get() = preferences.getInt(SELECTED_COLOR, selectedColorDefault)
         set(value) { preferences.put(SELECTED_COLOR, value) }
+
+    /******* Config ********/
+    val useMetricDefault: Boolean = false
+    var useMetric: Boolean
+        get() = preferences.getBoolean(USE_METRIC, useMetricDefault)
+        set(value) { preferences.put(USE_METRIC, value) }
 
     /********* Helpers ********/
     private fun SharedPreferences.put(key: String, value: Any?) {

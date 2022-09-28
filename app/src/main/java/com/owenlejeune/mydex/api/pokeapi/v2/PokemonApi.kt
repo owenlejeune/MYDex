@@ -5,6 +5,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,5 +27,8 @@ interface PokemonApi {
 
     @GET("stat/{id}")
     suspend fun getPokemonStat(@Path("id") id: Int): Response<PokemonStat>
+
+    @GET("egg-group/{id}")
+    suspend fun getEggGroup(@Path("id") id: Int): Response<EggGroup>
 
 }

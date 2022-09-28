@@ -5,6 +5,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 
 object AppCache {
 
@@ -12,5 +13,6 @@ object AppCache {
     var cachedPokemon = SparseArray<Pokemon>()
     var cachedTypes = SparseArray<PokemonType>()
     var cachedStats = SparseArray<PokemonStat>()
+    var cachedEggGroups = SparseArray<EggGroup>()
 
 }

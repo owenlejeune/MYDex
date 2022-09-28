@@ -5,6 +5,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
+import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,33 +18,23 @@ object DataManager: KoinComponent {
     private val service: PokemonService by inject()
 
     fun getPokemonById(id: Int, callback: (Pokemon) -> Unit) {
-        AppCache.cachedPokemon[id]?.let(callback) ?: run {
-            CoroutineScope(Dispatchers.IO).launch {
-                service.getPokemon(id).apply {
-                    if (isSuccessful) {
-                        body()?.let {
-                            AppCache.cachedPokemon.put(it.id, it)
-                            callback(it)
-                        }
-                    }
-                }
-            }
-        }
+        getById(
+            id = id,
+            callback = callback,
+            retriever = { AppCache.cachedPokemon[it] },
+            fetcher = { service.getPokemon(it) },
+            storer = { AppCache.cachedPokemon.put(it.id, it) }
+        )
     }
 
     fun getPokemonSpeciesById(id: Int, callback: (PokemonSpecies) -> Unit) {
-        AppCache.cachedSpecies[id]?.let(callback) ?: run {
-            CoroutineScope(Dispatchers.IO).launch {
-                service.getPokemonSpecies(id).apply {
-                    if (isSuccessful) {
-                        body()?.let {
-                            AppCache.cachedSpecies.put(it.id, it)
-                            callback(it)
-                        }
-                    }
-                }
-            }
-        }
+        getById(
+            id = id,
+            callback = callback,
+            retriever = { AppCache.cachedSpecies[it] },
+            fetcher = { service.getPokemonSpecies(it) },
+            storer = { AppCache.cachedSpecies.put(it.id, it) }
+        )
     }
 
     fun getTypeById(id: Int, callback: (PokemonType) -> Unit) {
@@ -57,18 +48,23 @@ object DataManager: KoinComponent {
     }
 
     fun getStatById(id: Int, callback: (PokemonStat) -> Unit) {
-        AppCache.cachedStats[id]?.let(callback) ?: run {
-            CoroutineScope(Dispatchers.IO).launch {
-                service.getPokemonStat(id).apply {
-                    if (isSuccessful) {
-                        body()?.let {
-                            AppCache.cachedStats.put(it.id, it)
-                            callback(it)
-                        }
-                    }
-                }
-            }
-        }
+        getById(
+            id = id,
+            callback = callback,
+            retriever = { AppCache.cachedStats[id] },
+            fetcher = { service.getPokemonStat(id) },
+            storer = { AppCache.cachedStats.put(it.id, it) }
+        )
+    }
+
+    fun getEggGroupById(id: Int, callback: (EggGroup) -> Unit) {
+        getById(
+            id = id,
+            callback = callback,
+            retriever = { AppCache.cachedEggGroups[id] },
+            fetcher = { service.getEggGroup(id) },
+            storer = { AppCache.cachedEggGroups.put(it.id, it) }
+        )
     }
 
     private fun <T> getById(

@@ -7,6 +7,6 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.NameAndUrl
 class EggGroup(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
-    @SerializedName("name") val names: List<NameAndLanguage>,
+    @SerializedName("names") val names: List<NameAndLanguage>,
     @SerializedName("pokemon_species") val pokemonSpecies: List<NameAndUrl>
 )

@@ -10,6 +10,7 @@ object PokeUtils {
     private val DEC_TO_CM = 10
     private val CM_TO_IN = 2.54
     private val IN_TO_FT = 12
+    private val GENDER_RATE = 1f/8f
 
     fun idToDexNumber(id: Int, includeNumberSign: Boolean = true): String {
         val padded = id.toString().padStart(3, '0')
@@ -25,25 +26,29 @@ object PokeUtils {
         return "https://assets.pokemon.com/assets/cms2/img/pokedex/full/${paddedNumber}.png"
     }
 
-    fun weightInPounds(weight: Int): Float {
-        return weight * HEC_TO_LBS
+    fun weightInPounds(weight: Int): String {
+        return "${weight * HEC_TO_LBS} lbs"
     }
 
-    fun weightInKg(weight: Int): Float {
-        return weight * HEC_TO_KG
+    fun weightInKg(weight: Int): String {
+        return "${weight * HEC_TO_KG} kg"
     }
 
-    fun heightToCm(height: Int): Int {
-        return height * DEC_TO_CM
+    fun heightToCm(height: Int): String {
+        return "${height * DEC_TO_CM} cm"
     }
 
-    fun heightToFtIn(height: Int): Pair<Int, Int> {
+    fun heightToFtIn(height: Int): String {
         val heightCm = height * DEC_TO_CM
 
-        val feet = floor((height / CM_TO_IN) / IN_TO_FT).toInt()
-        val inches = ceil((height / CM_TO_IN) - (feet * IN_TO_FT)).toInt()
+        val feet = floor((heightCm / CM_TO_IN) / IN_TO_FT).toInt()
+        val inches = ceil((heightCm / CM_TO_IN) - (feet * IN_TO_FT)).toInt()
 
-        return Pair(feet, inches)
+        return "${feet}' ${inches}\""
+    }
+
+    fun genderRateToPercentage(genderRate: Int): Float {
+       return genderRate.toFloat() * GENDER_RATE * 100
     }
 
 }
