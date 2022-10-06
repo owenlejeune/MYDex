@@ -32,6 +32,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.owenlejeune.mydex.R
 import com.owenlejeune.mydex.api.pokeapi.v2.PokemonService
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.ChainLink
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionChain
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
@@ -39,6 +41,7 @@ import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonType
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.egggroup.EggGroup
 import com.owenlejeune.mydex.extensions.adjustBy
 import com.owenlejeune.mydex.extensions.getIdFromUrl
+import com.owenlejeune.mydex.extensions.getIfNotEmpty
 import com.owenlejeune.mydex.extensions.getNameForLanguage
 import com.owenlejeune.mydex.preferences.AppPreferences
 import com.owenlejeune.mydex.ui.components.PokemonTypeLabel
@@ -528,10 +531,52 @@ private fun EvolutionView(
         modifier = Modifier
             .padding(all = 24.dp)
             .verticalScroll(state = scrollState)
-            .background(color = Color.Red)
             .fillMaxSize()
     ) {
         Text(text = "Evolution")
+
+        val id = pokemonSpecies.evolutionChainUrl.getIdFromUrl()
+        val evolutionChain = remember { mutableStateOf<EvolutionChain?>(null) }
+        if (evolutionChain.value == null) {
+            DataManager.getEvolutionChainById(id) { ec ->
+                evolutionChain.value = ec
+            }
+        }
+
+        val evolutionStages = remember { mutableListOf<EvolutionStage>() }
+        val nextChain = evolutionChain.value?.chain
+        if (evolutionStages.isEmpty()) {
+            EvolutionUtils.getEvolutionFromChainLink(nextChain) { es ->
+                evolutionStages.addAll(es)
+            }
+        }
+
+        evolutionStages.forEach { evolutionStage ->
+            if (evolutionStage.evolvesTo?.isNotEmpty() == true) {
+                Row {
+                    Text(
+                        text = evolutionStage.evolvesFrom.names.getNameForLanguage()
+                            ?: evolutionStage.evolvesFrom.name, modifier = Modifier.weight(1f)
+                    )
+                    Column(
+                        modifier = Modifier.weight(2f)
+                    ) {
+                        evolutionStage.evolvesTo.forEach { et ->
+                            Row {
+                                Column(
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(text = et.triggerAndCondition.trigger)
+                                    Text(text = et.triggerAndCondition.condition)
+                                }
+                                Text(text = et.evolvesTo.name, modifier = Modifier.weight(1f))
+                            }
+                            Divider(modifier = Modifier.height(2.dp), color = MaterialTheme.colorScheme.onSurface)
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 

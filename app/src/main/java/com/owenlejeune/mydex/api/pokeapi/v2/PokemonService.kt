@@ -1,7 +1,12 @@
 package com.owenlejeune.mydex.api.pokeapi.v2
 
 import android.util.Log
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionChain
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionTrigger
+import com.owenlejeune.mydex.api.pokeapi.v2.model.items.Item
+import com.owenlejeune.mydex.api.pokeapi.v2.model.location.Location
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
+import com.owenlejeune.mydex.api.pokeapi.v2.model.move.Move
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
@@ -50,6 +55,26 @@ class PokemonService: KoinComponent {
 
     suspend fun getEggGroup(id: Int): Response<EggGroup> {
         return service.getEggGroup(id)
+    }
+    
+    suspend fun getEvolutionChain(id: Int): Response<EvolutionChain> {
+        return service.getEvolutionChain(id)
+    }
+
+    suspend fun getEvolutionTrigger(id: Int): Response<EvolutionTrigger> {
+        return service.getEvolutionTrigger(id)
+    }
+
+    suspend fun getItem(id: Int): Response<Item> {
+        return service.getItem(id)
+    }
+
+    suspend fun getMove(id: Int): Response<Move> {
+        return service.getMove(id)
+    }
+
+    suspend fun getLocation(id: Int): Response<Location> {
+        return service.getLocation(id)
     }
 
 }

@@ -8,3 +8,7 @@ fun List<NameAndLanguage>.getNameForLanguage(): String? {
     val defLang = "en"
     return find { it.language.name == lang }?.name ?: find { it.language.name == defLang}?.name
 }
+
+fun <T> List<T>.getIfNotEmpty(index: Int): T? {
+    return if (isNotEmpty()) get(index) else null
+}

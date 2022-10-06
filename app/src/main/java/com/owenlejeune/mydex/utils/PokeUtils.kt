@@ -1,5 +1,6 @@
 package com.owenlejeune.mydex.utils
 
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionDetails
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -49,6 +50,10 @@ object PokeUtils {
 
     fun genderRateToPercentage(genderRate: Int): Float {
        return genderRate.toFloat() * GENDER_RATE * 100
+    }
+
+    fun evolutionDetailsToConditionString(evolutionDetails: EvolutionDetails): String {
+        return ""
     }
 
 }

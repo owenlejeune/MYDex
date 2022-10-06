@@ -1,6 +1,11 @@
 package com.owenlejeune.mydex.api.pokeapi.v2
 
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionChain
+import com.owenlejeune.mydex.api.pokeapi.v2.model.evolution.EvolutionTrigger
+import com.owenlejeune.mydex.api.pokeapi.v2.model.items.Item
+import com.owenlejeune.mydex.api.pokeapi.v2.model.location.Location
 import com.owenlejeune.mydex.api.pokeapi.v2.model.misc.PaginatedResponse
+import com.owenlejeune.mydex.api.pokeapi.v2.model.move.Move
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.Pokemon
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonSpecies
 import com.owenlejeune.mydex.api.pokeapi.v2.model.pokemon.PokemonStat
@@ -30,5 +35,20 @@ interface PokemonApi {
 
     @GET("egg-group/{id}")
     suspend fun getEggGroup(@Path("id") id: Int): Response<EggGroup>
+
+    @GET("evolution-chain/{id}")
+    suspend fun getEvolutionChain(@Path("id") id: Int): Response<EvolutionChain>
+
+    @GET("evolution-trigger/{id}")
+    suspend fun getEvolutionTrigger(@Path("id") id: Int): Response<EvolutionTrigger>
+
+    @GET("item/{id}")
+    suspend fun getItem(@Path("id") id: Int): Response<Item>
+
+    @GET("move/{id}")
+    suspend fun getMove(@Path("id") id: Int): Response<Move>
+
+    @GET("location/{id}")
+    suspend fun getLocation(@Path("id") id: Int): Response<Location>
 
 }
